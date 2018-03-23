@@ -53,7 +53,7 @@ function check_ip() {
       ip=$(wget --header 'x-pm-appversion: Other' --header 'x-pm-apiversion: 3' \
         --header 'Accept: application/vnd.protonmail.v1+json' \
         --timeout 4 -q -O /dev/stdout 'https://api.protonmail.ch/vpn/location' \
-        | grep 'IP' | cut -d ':' -f2 | cut -d '"' -f2)
+        | awk -F'"' '$2 == "IP" { print $4 }')
       counter=$((counter+1))
     else
       ip="Error."
