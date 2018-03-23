@@ -178,7 +178,7 @@ function openvpn_connect() {
     selected_protocol="udp"  # Default protocol
   fi
 
-  current_ip=$(check_ip)
+  current_ip="$(check_ip)"
 
   wget --header 'x-pm-appversion: Other' --header 'x-pm-apiversion: 3' \
     --header 'Accept: application/vnd.protonmail.v1+json' \
@@ -191,7 +191,7 @@ function openvpn_connect() {
   counter=0
   while [[ $counter -lt $max_checks ]]; do
     sleep 5
-    new_ip=$(check_ip)
+    new_ip="$(check_ip)"
     if [[ ("$current_ip" != "$new_ip") && ("$new_ip" != "Error.") ]]; then
       modify_dns_resolvconf to_protonvpn_dns # Use protonvpn DNS server
       manage_ipv6 disable # Disabling IPv6 on machine.
@@ -239,7 +239,7 @@ function connect_to_fastest_vpn() {
     echo "[!] Error: OpenVPN is already running on this machine."
     exit 1
   fi
-  if [[ $(check_ip) == "Error." ]]; then
+  if [[ "$(check_ip)" == "Error." ]]; then
     echo "[!]Error: There is an internet connection issue."
     exit 1
   fi
@@ -256,7 +256,7 @@ function connect_to_random_vpn() {
     echo "[!] Error: OpenVPN is already running on this machine."
     exit 1
   fi
-  if [[ $(check_ip) == "Error." ]]; then
+  if [[ "$(check_ip)" == "Error." ]]; then
     echo "[!]Error: There is an internet connection issue."
     exit 1
   fi
@@ -274,7 +274,7 @@ function connection_to_vpn_via_dialog_menu() {
     echo "[!] Error: OpenVPN is already running on this machine."
     exit 1
   fi
-  if [[ $(check_ip) == "Error." ]]; then
+  if [[ "$(check_ip)" == "Error." ]]; then
     echo "[!]Error: There is an internet connection issue."
     exit 1
   fi
